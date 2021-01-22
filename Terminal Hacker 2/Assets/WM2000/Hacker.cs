@@ -8,11 +8,12 @@ public class Hacker : MonoBehaviour
     void Start()
     {
 
-        ShowMainMenu("Andrew");
+        // ShowMainMenu("Andrew");
+        ShowMainMenu();
 
     }
 
-    void ShowMainMenu(string name)
+    void ShowMainMenu(/*string name*/)
     {
         /**
         Terminal.WriteLine("Wifi has been slow so you check the router and see some unwanted neighborhood visitors have been limiting your streaming capacity! To get back to bingeing The Office again, you need to hack in and reroute them to your annoying neighbor Steve.");
@@ -26,7 +27,7 @@ public class Hacker : MonoBehaviour
         Terminal.ClearScreen();
         /**var greeting = "Hello Andrew";
         Terminal.WriteLine(greeting);**/
-        Terminal.WriteLine("Hello " + name);
+       // Terminal.WriteLine("Hello " + name);
         Terminal.WriteLine("What would you like to hack into?");
         Terminal.WriteLine("");
         Terminal.WriteLine("Press 1 to hack into Kindergarden.");
@@ -38,7 +39,30 @@ public class Hacker : MonoBehaviour
 
     void OnUserInput(string input)
     {
-        print(input == "1");
+        if (input == "menu")
+        {
+            ShowMainMenu();
+        }
+        else if (input == "1")
+        {
+            Terminal.WriteLine("Input accepted.");
+        }
+        else if(input == "2")
+        {
+            Terminal.WriteLine("Input accepted.");
+        }
+        else if (input == "3")
+        {
+            Terminal.WriteLine("Input accepted.");
+        }
+        else if (input == "007")
+        {
+            Terminal.WriteLine("Please select a level Mr. Bond.");
+        }
+        else
+        {
+            Terminal.WriteLine("Please choose a valid level.");
+        }
     }
 
     // Update is called once per frame
