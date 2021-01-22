@@ -36,6 +36,11 @@ public class Hacker : MonoBehaviour
         Terminal.WriteLine("Enter your selection: ");
     }
 
+    void OnUserInput(string input)
+    {
+        print(input == "1");
+    }
+
     // Update is called once per frame
     void Update()
     {
