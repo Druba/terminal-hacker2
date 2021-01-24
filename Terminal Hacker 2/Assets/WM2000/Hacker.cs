@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Hacker : MonoBehaviour
@@ -10,6 +8,8 @@ public class Hacker : MonoBehaviour
     string[] Level1Passwords = { "ball", "swing", "crayon", "paint", "play" };
     string[] Level2Passwords = { "succulent", "garden", "bamboo", "orchid", "manure" };
     string[] Level3Passwords = { "pasteurization", "curdling", "tyrosemiophilia", "mozzarella", "cheesemonger" };
+    const string menuHint = "You may type menu at any time.";
+
 
     // Game State
     int level;
@@ -63,7 +63,7 @@ public class Hacker : MonoBehaviour
         if (IsValidLevel)
         {
             level = int.Parse(input);
-            StartGame();    
+            AskForPassword();    
         }
         else if (input == "007") // easter egg
         {
@@ -81,39 +81,101 @@ public class Hacker : MonoBehaviour
 
     }
 
-    void StartGame()
+    void AskForPassword()
     {
         currentScreen = Screen.Password;
-        switch(level)
+        SetRandomPassword();
+        Terminal.ClearScreen();
+        Terminal.WriteLine("You have chosen to hack the " + Place[level-1]);
+        Terminal.WriteLine("Enter the password, hint: " + password.Anagram());
+        Terminal.WriteLine(menuHint);
+    }
+
+    void SetRandomPassword()
+    {
+        switch (level)
         {
             case 1:
-                password = Level1Passwords[0];
+                password = Level1Passwords[Random.Range(0, Level1Passwords.Length)];
                 break;
             case 2:
-                password = Level2Passwords[0];
+                password = password = Level2Passwords[Random.Range(0, Level1Passwords.Length)];
                 break;
             case 3:
-                password = Level3Passwords[0];
+                password = password = Level3Passwords[Random.Range(0, Level1Passwords.Length)];
                 break;
             default:
                 Debug.LogError("Invalid level number.");
                 break;
         }
-        Terminal.ClearScreen();
-        Terminal.WriteLine("You have chosen to hack the " + Place[level-1]);
-        Terminal.WriteLine("Please enter the password: ");
     }
+
 
     void CheckPassword(string input)
     {
         if (input == password)
-            {
-            currentScreen = Screen.Win;
-            Terminal.WriteLine("Access granted.");
+        {
+            DisplayWinScreen();
         }
         else
         {
-            Terminal.WriteLine("Incorrect password. Try again.");
+            AskForPassword();
+        }
+    }
+
+    void DisplayWinScreen()
+    {
+        currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowLevelReward();
+        Terminal.WriteLine(menuHint);
+    }
+
+    void ShowLevelReward()
+    {
+        switch(level)
+        {
+            case 1:
+                Terminal.WriteLine(@"
+Toddlers don't need internet...
+
+       .' '.
+  __  /     \   _
+ /.-;|  /'._|_.'#`\
+||   |  |  _       |
+\\__/|  \.' ;'-.__/
+ '--' \     /
+       '._.'  
+");
+                break;
+            case 2:
+                Terminal.WriteLine(@"
+Plants don't need internet...
+
+ _,-._
+/ \_/ \
+>-(_)-<    
+\_/ \_/
+  `-'
+                ");
+                break;
+            case 3:
+                Terminal.WriteLine(@"
+Cheese doesn't need internet...
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/    
+
+
+                ");
+                break;
+
         }
     }
 }
